@@ -22,7 +22,6 @@ func inviteCommandHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if len(recipients) == 1 {
 		duelInvite(s, m, recipients[0])
 	} else if m.Content == "-duel Anyone" {
-		s.ChannelMessageSend(m.ChannelID, "This feature isn't ready yet")
 		generalDuelInvite(s, m)
 	} else if len(recipients) == 0 {
 		s.ChannelMessageSend(m.ChannelID, errorMessage("Invalid Reciepient", "Ensure you are mentioning the player in the format of @<user>. Or, if you are trying to send a general invite leave the user blank."))
@@ -56,7 +55,7 @@ func duelInvite(s *discordgo.Session, m *discordgo.MessageCreate, recipient *dis
 		Description: "Click the  ✅  to accept this invitation, or the  ❌  to deny.",
 		Color:       0x0099ff,
 		Footer: &discordgo.MessageEmbedFooter{
-			Text: "invite:" + m.Author.ID,
+			Text: "duelInvite:" + m.Author.ID,
 		},
 	})
 
@@ -78,7 +77,7 @@ func generalDuelInvite(s *discordgo.Session, m *discordgo.MessageCreate) {
 		Description: "Click the  ✅  to accept this invitation.",
 		Color:       0x0099ff,
 		Footer: &discordgo.MessageEmbedFooter{
-			Text: "generalinvite:" + m.Author.ID,
+			Text: "generalDuelInvite:" + m.Author.ID,
 		},
 	})
 
@@ -92,6 +91,7 @@ func generalDuelInvite(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 // Handles all invite related reactions
 func duelInvitationHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd, m *discordgo.Message, user *discordgo.User, opponentID string, general bool) {
+
 	// If the reaction comes from the sender of the invite(This will only happen in the case of general invites)
 	if r.UserID == opponentID {
 		return

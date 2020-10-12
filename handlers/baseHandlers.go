@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -9,7 +10,6 @@ import (
 // This function will be called (due to AddHandler above) every time a new
 // message is created on any channel that the authenticated bot has access to.
 func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-
 	// Ignore all messages created by the bot itself
 	// This isn't required in this specific example but it's a good practice.
 	if m.Author.ID == s.State.User.ID {
@@ -54,4 +54,62 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		break
 
 	}
+}
+
+// Handles all checkers related reactions
+func ReactionsHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd) {
+	// Ignore all reactions created by the bot itself
+	if r.UserID == s.State.User.ID {
+		return
+	}
+
+	// Fetch some extra information about the message associated to the reaction
+	m, err := s.ChannelMessage(r.ChannelID, r.MessageID)
+	// Ignore reactions on messages that have an error or that have not been sent by the bot
+	if err != nil || m == nil || m.Author.ID != s.State.User.ID {
+		return
+	}
+
+	// Ignore messages that are not embeds with a command in the footer
+	if len(m.Embeds) != 1 || m.Embeds[0].Footer == nil || m.Embeds[0].Footer.Text == "" {
+		return
+	}
+
+	// Ignore reactions that haven't been set by the bot
+	if !isBotReaction(s, m.Reactions, &r.Emoji) {
+		return
+	}
+
+	user, err := s.User(r.UserID)
+	// Ignore when sender is invalid or is a bot
+	if err != nil || user == nil || user.Bot {
+		return
+	}
+
+	args := strings.Split(m.Embeds[0].Footer.Text, ":")
+	// Ensure valid footer command
+	if len(args) != 2 {
+		return
+	}
+
+	// Call the corresponding handler
+	switch args[0] {
+	case "duelInvite":
+		duelInvitationHandler(s, r, m, user, args[1], false)
+		break
+	case "generalDuelInvite":
+		duelInvitationHandler(s, r, m, user, args[1], true)
+		break
+	}
+}
+
+// Check if users reaction is one preset by the bot
+func isBotReaction(s *discordgo.Session, reactions []*discordgo.MessageReactions, emoji *discordgo.Emoji) bool {
+	for _, r := range reactions {
+		if r.Emoji.Name == emoji.Name && r.Me {
+			return true
+		}
+	}
+
+	return false
 }
