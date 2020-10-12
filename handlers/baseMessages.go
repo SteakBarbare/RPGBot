@@ -34,8 +34,8 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// DUEL BASED COMMANDS
 	// Show all the characters linked to a player
 	case "-duel invite":
-		s.ChannelMessageSend(m.ChannelID, "Showing your characters:")
-		ShowCharacters(s, m)
+		s.ChannelMessageSend(m.ChannelID, "Enter the name of the player you want to challenge or -quit to cancel the invitation")
+		s.AddHandlerOnce(inviteCommandHandler)
 		break
 
 	// Hahahahaha hehehehehe

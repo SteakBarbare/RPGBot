@@ -14,12 +14,21 @@ func ShowCharacters(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
+	// Get the characters info from db
 	charRows, err := database.DB.Query(fmt.Sprintln("SELECT * FROM Characters WHERE player=", m.Author.ID))
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer charRows.Close()
+
+	// Check if there is at least one character
+	if !charRows.NextResultSet() {
+		s.ChannelMessageSend(m.ChannelID, fmt.Sprintln("No character found"))
+		return
+	}
+
+	// Show the different characters and their stats
 	s.ChannelMessageSend(m.ChannelID, fmt.Sprintln("Your characters are: "))
 	for charRows.Next() {
 
