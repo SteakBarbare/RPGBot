@@ -1,6 +1,10 @@
 package handlers
 
-import "github.com/bwmarrin/discordgo"
+import (
+	"fmt"
+
+	"github.com/bwmarrin/discordgo"
+)
 
 // This function will be called (due to AddHandler above) every time a new
 // message is created on any channel that the authenticated bot has access to.
@@ -24,8 +28,17 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		ShowCharacters(s, m)
 	}
 
+	// Show the characters linked to the current user
+	if m.Content == "-crrpg Help" {
+		s.ChannelMessageSend(m.ChannelID, "These are the different commands you can use:")
+		s.ChannelMessageSend(m.ChannelID, fmt.Sprintln("```-char New: Create a new character, a name will be asked and stats are generated randomly betweend 21 & 40",
+			"\n-char Show: Show all your characters and their stats",
+			"\nThe database will often be wiped out, so expect your characters to often disappear```",
+			"\n-Lambert: hahahahaha hehehehehe"))
+	}
+
 	// Hahahahaha hehehehehe
-	if m.Content == "Lambert" {
+	if m.Content == "-Lambert" {
 		s.ChannelMessageSend(m.ChannelID, "https://www.youtube.com/watch?v=1FswhQmILLU")
 	}
 }

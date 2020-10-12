@@ -42,7 +42,6 @@ func ShowCharacters(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		}
 
-		log.Printf("name is %s\n", charName)
 		s.ChannelMessageSend(m.ChannelID, fmt.Sprintln("Name: **", charName, "**"))
 		s.ChannelMessageSend(m.ChannelID, fmt.Sprintln(
 			"**WeaponSkill:** ", strconv.Itoa(weaponSkill),
