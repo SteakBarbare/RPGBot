@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS characters (
     charName VARCHAR(255) NOT NULL,
-    player VARCHAR(255) NOT NULL,
+    player BIGINT NOT NULL,
     weaponSkill INT NOT NULL,
     balisticSkill INT NOT NULL,
     strength INT NOT NULL,

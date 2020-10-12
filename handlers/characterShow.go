@@ -14,7 +14,7 @@ func ShowCharacters(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	charRows, err := database.DB.Query("SELECT * FROM Characters")
+	charRows, err := database.DB.Query(fmt.Sprintln("SELECT * FROM Characters WHERE player=", m.Author.ID))
 	if err != nil {
 		log.Fatal(err)
 	}
