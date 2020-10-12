@@ -21,7 +21,7 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// CHARACTER BASED COMMANDS
 	// Create a new character
 	case "-char New":
-		s.ChannelMessageSend(m.ChannelID, "Enter a name for your character, or -quit to cancel this operation")
+		s.ChannelMessageSend(m.ChannelID, "Enter a name for your character, or type -quit to cancel this operation")
 		s.AddHandlerOnce(NewCharacter)
 		break
 
@@ -33,8 +33,8 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	// DUEL BASED COMMANDS
 	// Show all the characters linked to a player
-	case "-duel invite":
-		s.ChannelMessageSend(m.ChannelID, "Enter the name of the player you want to challenge or -quit to cancel the invitation")
+	case "-duel Invite":
+		s.ChannelMessageSend(m.ChannelID, "Mention the player you want to challenge or type -quit to cancel the invitation")
 		s.AddHandlerOnce(inviteCommandHandler)
 		break
 
@@ -48,8 +48,9 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		s.ChannelMessageSend(m.ChannelID, "These are the different commands you can use:")
 		s.ChannelMessageSend(m.ChannelID, fmt.Sprintln("```-char New: Create a new character, a name will be asked and stats are generated randomly betweend 21 & 40",
 			"\n-char Show: Show all your characters and their stats",
-			"\nThe database will often be wiped out, so expect your characters to often disappear```",
-			"\n-Lambert: hahahahaha hehehehehe"))
+			"\n-duel Invite: Invite someone to a duel with you",
+			"\nThe database will often be wiped out, so expect your characters to often disappear",
+			"\n-Lambert: hahahahaha hehehehehe```"))
 		break
 
 	}
