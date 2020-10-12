@@ -101,6 +101,8 @@ func duelInvitationHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd
 		return
 	}
 	opponentDM, _ := s.UserChannelCreate(opponentID)
+
+	// If accepted, send a message to confirm the invitation, then launch a duel
 	if r.Emoji.Name == "✅" && (general || !hasOtherReactionsBesides("✅", m.Reactions)) {
 		s.ChannelMessageEditEmbed(r.ChannelID, r.MessageID, &discordgo.MessageEmbed{
 			Title:       "Invite Accepted!",
@@ -111,6 +113,8 @@ func duelInvitationHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd
 		// Create a game object
 
 		s.ChannelMessageSend(opponentDM.ID, successMessage("Game on!", formatUser(user)+" accepted your checkers invite! Wait here for them to make their move."))
+
+		// Send a message to tell the invitation was declined otherwise
 	} else if !general && r.Emoji.Name == "❌" && !hasOtherReactionsBesides("❌", m.Reactions) {
 		s.ChannelMessageEditEmbed(r.ChannelID, r.MessageID, &discordgo.MessageEmbed{
 			Title:       "Invite Declined",

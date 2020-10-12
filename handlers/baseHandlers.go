@@ -92,7 +92,7 @@ func ReactionsHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd) {
 		return
 	}
 
-	// Call the corresponding handler
+	// Call the corresponding handler (they are set in the footer part of the embed invitation messages)
 	switch args[0] {
 	case "duelInvite":
 		duelInvitationHandler(s, r, m, user, args[1], false)

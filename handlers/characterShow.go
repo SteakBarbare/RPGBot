@@ -51,6 +51,7 @@ func ShowCharacters(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		}
 
+		// Send a embed message for each character showing their informations
 		_, err := s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 			Title: fmt.Sprintln("Name: **", charName, "**"),
 			Description: fmt.Sprintln(
