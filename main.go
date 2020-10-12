@@ -2,16 +2,30 @@ package main
 
 import (
 	"fmt"
-	"github.com/SteakBarbare/RPGBot/handlers"
-	"github.com/bwmarrin/discordgo"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/SteakBarbare/RPGBot/database"
+	"github.com/SteakBarbare/RPGBot/handlers"
+	"github.com/bwmarrin/discordgo"
+	"github.com/caarlos0/env/v6"
 )
 
 const token string = "NzYxMjU4NDczNTYzNDg4MjY3.X3X_Mw.j4KGRVbhP0WZVoHBYlmNTHqvPzM"
 
 func main() {
+
+	cfg := database.Config{}
+	if err := env.Parse(&cfg); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(cfg)
+
+	database.Connect(cfg)
+	database.MakeMigrations()
 
 	// Create a new Discord session using the provided bot token.
 
