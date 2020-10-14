@@ -15,3 +15,11 @@ type PlayerChar struct {
 	Name, Player                                                                               string
 	WeaponSkill, BalisticSkill, Strength, Endurance, Agility, Willpower, Fellowship, Hitpoints int
 }
+
+// Victories, Defeats, Temporary stat values & boolean to check if the character is fighting
+
+type charBattle struct {
+	Name, Player                                                                                                   string
+	Victories, Defeats, WeaponSkill, BalisticSkill, Strength, Endurance, Agility, Willpower, Fellowship, Hitpoints int
+	IsFighting                                                                                                     bool
+}

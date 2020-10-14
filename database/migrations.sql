@@ -10,3 +10,9 @@ CREATE TABLE IF NOT EXISTS characters (
     fellowship INT NOT NULL,
     hitpoints INT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS characters (
+    involvedPlayers json
+	selectingPlayer int
+	choosenChar     []string
+);

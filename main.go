@@ -7,13 +7,14 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/JackMaarek/spiderMail/config"
 	"github.com/SteakBarbare/RPGBot/database"
 	"github.com/SteakBarbare/RPGBot/handlers"
 	"github.com/bwmarrin/discordgo"
 	"github.com/caarlos0/env/v6"
 )
 
-const token string = "NzYxMjU4NDczNTYzNDg4MjY3.X3X_Mw.j4KGRVbhP0WZVoHBYlmNTHqvPzM"
+const token string = config.GetDotEnvVariable("ACCESS_EXPIRES")
 
 func main() {
 

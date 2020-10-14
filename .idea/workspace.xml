@@ -21,12 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e48023e9-7086-4365-b960-f70384f7b3c7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPGBot" beforeDir="false" afterPath="$PROJECT_DIR$/RPGBot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/characterCreation.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/characterCreation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/messageTest.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/characters.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/characters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/Invitations.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/Invitations.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/characterShow.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/characterShow.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

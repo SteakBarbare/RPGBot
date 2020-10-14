@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/SteakBarbare/RPGBot/game"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -111,8 +112,9 @@ func duelInvitationHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd
 		})
 
 		// Create a game object
+		newDuel := game.DuelPreparation{}
 
-		s.ChannelMessageSend(opponentDM.ID, successMessage("Game on!", formatUser(user)+" accepted your checkers invite! Wait here for them to make their move."))
+		s.ChannelMessageSend(opponentDM.ID, successMessage("Game on!", formatUser(user)+" accepted your checkers invite ! Now select a character to send in the arena."))
 
 		// Send a message to tell the invitation was declined otherwise
 	} else if !general && r.Emoji.Name == "❌" && !hasOtherReactionsBesides("❌", m.Reactions) {
@@ -121,6 +123,6 @@ func duelInvitationHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd
 			Description: "Invite from " + formatUser(sender) + " declined.",
 			Color:       0xff0000,
 		})
-		s.ChannelMessageSend(opponentDM.ID, errorMessage("Invite declined", formatUser(user)+" declined your checkers game invite."))
+		s.ChannelMessageSend(opponentDM.ID, errorMessage("Invite declined", formatUser(user)+" declined your duel invite."))
 	}
 }
