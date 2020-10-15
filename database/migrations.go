@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"io/ioutil"
 	"strings"
 
@@ -18,7 +17,6 @@ func MakeMigrations() {
 
 	requests := strings.Split(string(file), ";")
 	for _, request := range requests {
-		fmt.Println("Pute")
 		_, err := DB.Exec(request)
 		if err != nil {
 			log.Error("Error during migrations: ", err)

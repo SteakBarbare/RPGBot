@@ -1,6 +1,9 @@
 package handlers
 
 import (
+	"fmt"
+
+	"github.com/SteakBarbare/RPGBot/database"
 	"github.com/SteakBarbare/RPGBot/game"
 	"github.com/bwmarrin/discordgo"
 )
@@ -111,8 +114,16 @@ func duelInvitationHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd
 			Color:       0x00ff00,
 		})
 
+		opponents := []string{user.ID, opponentID}
+
 		// Create a game object
-		newDuel := game.DuelPreparation{}
+		newDuel := game.DuelPreparation{InvolvedPlayers: opponents, SelectingPlayer: user.ID}
+
+		_, err := database.DB.Exec(fmt.Sprintln(`INSERT INTO duelPreparation (involvedPlayers, selectingPlayer, isReady) VALUES (`, newDuel.InvolvedPlayers, `, `, newDuel.SelectingPlayer, `, 0`))
+		fmt.Println("Puteuh")
+		if err != nil {
+			panic(err)
+		}
 
 		s.ChannelMessageSend(opponentDM.ID, successMessage("Game on!", formatUser(user)+" accepted your checkers invite ! Now select a character to send in the arena."))
 

@@ -7,16 +7,24 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/JackMaarek/spiderMail/config"
 	"github.com/SteakBarbare/RPGBot/database"
 	"github.com/SteakBarbare/RPGBot/handlers"
 	"github.com/bwmarrin/discordgo"
 	"github.com/caarlos0/env/v6"
+	"github.com/joho/godotenv"
 )
 
-const token string = config.GetDotEnvVariable("ACCESS_EXPIRES")
-
 func main() {
+
+	var token string
+
+	// Loading env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	token = os.Getenv("TOKEN")
 
 	cfg := database.Config{}
 	if err := env.Parse(&cfg); err != nil {

@@ -11,8 +11,9 @@ CREATE TABLE IF NOT EXISTS characters (
     hitpoints INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS characters (
-    involvedPlayers json
-	selectingPlayer int
-	choosenChar     []string
+CREATE TABLE IF NOT EXISTS duelPreparation (
+    involvedPlayers json NOT NULL,
+	selectingPlayer INT NOT NULL,
+	choosenChar     json,
+    isReady         INT NOT NULL
 );
