@@ -12,6 +12,7 @@ Hitpoints			Character hitpoints, if it reaches 0, the character may suffer minor
 */
 
 type PlayerChar struct {
+	Id                                                                                         int
 	Name, Player                                                                               string
 	WeaponSkill, BalisticSkill, Strength, Endurance, Agility, Willpower, Fellowship, Hitpoints int
 }

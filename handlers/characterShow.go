@@ -29,14 +29,10 @@ func ShowCharacters(s *discordgo.Session, m *discordgo.MessageCreate) {
 	for charRows.Next() {
 
 		// Check if there is at least one character
-		// if !charRows.NextResultSet() {
-		// 	s.ChannelMessageSend(m.ChannelID, fmt.Sprintln("No character found"))
-		// 	return
-		// }
 
 		createdCharacter := game.PlayerChar{}
 
-		if err := charRows.Scan(&createdCharacter.Name, &createdCharacter.Player, &createdCharacter.WeaponSkill, &createdCharacter.BalisticSkill, &createdCharacter.Strength, &createdCharacter.Endurance, &createdCharacter.Agility, &createdCharacter.Willpower, &createdCharacter.Fellowship, &createdCharacter.Hitpoints); err != nil {
+		if err := charRows.Scan(&createdCharacter.Id, &createdCharacter.Name, &createdCharacter.Player, &createdCharacter.WeaponSkill, &createdCharacter.BalisticSkill, &createdCharacter.Strength, &createdCharacter.Endurance, &createdCharacter.Agility, &createdCharacter.Willpower, &createdCharacter.Fellowship, &createdCharacter.Hitpoints); err != nil {
 
 			log.Fatal(err)
 

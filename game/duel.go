@@ -1,7 +1,15 @@
 package game
 
 type DuelPreparation struct {
-	InvolvedPlayers []string
+	Id              string
 	SelectingPlayer string
-	ChoosenChar     []string
+	IsReady         int
+}
+
+type DuelPlayer struct {
+	PreparationId  string
+	Challenger     string
+	Challenged     string
+	ChallengerChar string
+	ChallengedChar string
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/SteakBarbare/RPGBot/database"
-	"github.com/SteakBarbare/RPGBot/game"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -77,7 +76,7 @@ func duelInvite(s *discordgo.Session, m *discordgo.MessageCreate, recipient *dis
 // Sends a general invite for any user in the channel to accept
 func generalDuelInvite(s *discordgo.Session, m *discordgo.MessageCreate) {
 	invite, err := s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
-		Title:       "Checkers game invite from " + formatUser(m.Author),
+		Title:       "Duel invite from " + formatUser(m.Author),
 		Description: "Click the  ✅  to accept this invitation.",
 		Color:       0x0099ff,
 		Footer: &discordgo.MessageEmbedFooter{
@@ -117,15 +116,23 @@ func duelInvitationHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd
 		opponents := []string{user.ID, opponentID}
 
 		// Create a game object
-		newDuel := game.DuelPreparation{InvolvedPlayers: opponents, SelectingPlayer: user.ID}
 
-		_, err := database.DB.Exec(fmt.Sprintln(`INSERT INTO duelPreparation (involvedPlayers, selectingPlayer, isReady) VALUES (`, newDuel.InvolvedPlayers, `, `, newDuel.SelectingPlayer, `, 0`))
-		fmt.Println("Puteuh")
+		duelPreparationId := 0
+
+		err = database.DB.QueryRow(`INSERT INTO duelPreparation (selectingPlayer, isReady) VALUES ($1, $2) RETURNING id`, opponents[1], 0).Scan(&duelPreparationId)
 		if err != nil {
-			panic(err)
+			fmt.Println(err.Error())
 		}
 
-		s.ChannelMessageSend(opponentDM.ID, successMessage("Game on!", formatUser(user)+" accepted your checkers invite ! Now select a character to send in the arena."))
+		_, err = database.DB.Exec(`INSERT INTO duelPlayers (preparationId, challenger, challenged, challengerChar, challengedChar) VALUES ($1, $2, $3, $4, $5)`, duelPreparationId, opponents[1], opponents[0], "", "")
+
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+
+		s.ChannelMessageSend(r.ChannelID, successMessage("Game on!", formatUser(user)+" accepted your duel invite ! Now select a character to send in the arena."))
+		//chooseCharacterBase(s, m.ChannelID, opponents, 0)
+		s.AddHandlerOnce(chooseCharacter)
 
 		// Send a message to tell the invitation was declined otherwise
 	} else if !general && r.Emoji.Name == "❌" && !hasOtherReactionsBesides("❌", m.Reactions) {
