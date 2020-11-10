@@ -10,12 +10,11 @@ import (
 )
 
 func chooseCharacterBase(s *discordgo.Session, channelID string, involvedPlayers []string, lastPlayer int) {
-	fmt.Println("Pute")
 	if lastPlayer == 0 {
 		s.ChannelMessageSend(channelID, "Choose a character")
 		s.AddHandlerOnce(chooseCharacter)
 	} else {
-		s.ChannelMessageSend(channelID, "All Players are ready !")
+		s.ChannelMessageSend(channelID, "All Players are ready, starting duel !")
 	}
 
 }
@@ -39,11 +38,9 @@ func chooseCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 			s.ChannelMessageSend(m.ChannelID, "No Duel found, aborting duel preparation")
 			return
 		case nil:
-			fmt.Println(m.Author.ID)
-			fmt.Println(currentDuel.SelectingPlayer)
+
 			// Check if the message author is the selecting player
 			if m.Author.ID == currentDuel.SelectingPlayer {
-				fmt.Println("Pute 4.5")
 
 				// Get the character from db
 				charRow := database.DB.QueryRow("SELECT charName FROM characters WHERE player=$1 AND charName=$2;", m.Author.ID, m.Content)
@@ -51,12 +48,11 @@ func chooseCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 				var selectedCharacter string
 				switch err = charRow.Scan(&selectedCharacter); err {
 				case sql.ErrNoRows:
-					fmt.Println("Pute 4.9")
 					s.ChannelMessageSend(m.ChannelID, "No character found, type -char Show if you forgot about your characters name")
 					s.AddHandlerOnce(chooseCharacter)
 					return
 				case nil:
-					fmt.Println("Pute 5")
+
 					// Select the opponents and their respective character informations
 					duelPlayerRow := database.DB.QueryRow(fmt.Sprintln("SELECT challenger, challenged, challengerChar, challengedChar FROM duelPlayers WHERE preparationId=", currentDuel.Id))
 					duelPlayers := game.DuelPlayer{}
@@ -67,7 +63,7 @@ func chooseCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 						s.AddHandlerOnce(chooseCharacter)
 						return
 					case nil:
-						fmt.Println(duelPlayers.Challenged)
+
 						// Insert the selected character in DB and return the controller function
 						if currentDuel.SelectingPlayer == duelPlayers.Challenger {
 							_, err = database.DB.Exec(`UPDATE duelPlayers SET challengerChar=$1 WHERE preparationId=$2;`, m.Content, currentDuel.Id)
@@ -79,7 +75,6 @@ func chooseCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 							if err != nil {
 								fmt.Println(err.Error())
 							}
-							fmt.Println("Pute 7")
 							chooseCharacterBase(s, m.ChannelID, []string{duelPlayers.Challenger, duelPlayers.Challenged}, 0)
 						} else if currentDuel.SelectingPlayer == duelPlayers.Challenged {
 							_, err = database.DB.Exec(`UPDATE duelPlayers SET challengedChar=$1 WHERE preparationId=$2;`, m.Content, currentDuel.Id)

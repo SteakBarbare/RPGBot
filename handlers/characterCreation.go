@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -16,6 +17,18 @@ func NewCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	if m.Content != "-quit" {
+
+		// Get the character from db
+		checkChar := database.DB.QueryRow("SELECT charName FROM characters WHERE player=$1 AND charName=$2;", m.Author.ID, m.Content)
+		var foundCharName string
+		switch err := checkChar.Scan(&foundCharName); err {
+		case sql.ErrNoRows:
+
+		case nil:
+			s.ChannelMessageSend(m.ChannelID, "A character with the same name already exists for this account, please choose another name")
+			s.AddHandlerOnce(NewCharacter)
+			return
+		}
 
 		character := statsGeneration(m.Content, m.Author.ID)
 
