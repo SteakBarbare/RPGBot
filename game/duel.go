@@ -4,6 +4,7 @@ type DuelPreparation struct {
 	Id              string
 	SelectingPlayer string
 	IsReady         int
+	IsOver          bool
 }
 
 type DuelPlayer struct {

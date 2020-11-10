@@ -9,13 +9,31 @@ CREATE TABLE IF NOT EXISTS characters (
     agility INT NOT NULL,
     willpower INT NOT NULL,
     fellowship INT NOT NULL,
-    hitpoints INT NOT NULL
+    hitpoints INT NOT NULL,
+    isCharAlive BOOLEAN NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS battleChars(
+    id SERIAL,
+    charName VARCHAR(255) NOT NULL,
+    player BIGINT NOT NULL,
+    weaponSkill INT NOT NULL,
+    balisticSkill INT NOT NULL,
+    strength INT NOT NULL,
+    endurance INT NOT NULL,
+    agility INT NOT NULL,
+    willpower INT NOT NULL,
+    fellowship INT NOT NULL,
+    hitpoints INT NOT NULL,
+    isDodging BOOLEAN,
+    isFleeing BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS duelPreparation (
     id SERIAL,
-	selectingPlayer VARCHAR(255) NOT NULL,
-    isReady         INT NOT NULL
+	selectingPlayer    VARCHAR(255) NOT NULL,
+    isReady         INT NOT NULL,
+    isOver          BOOLEAN NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS duelPlayers(

@@ -15,6 +15,7 @@ type PlayerChar struct {
 	Id                                                                                         int
 	Name, Player                                                                               string
 	WeaponSkill, BalisticSkill, Strength, Endurance, Agility, Willpower, Fellowship, Hitpoints int
+	IsCharAlive                                                                                bool
 }
 
 // Victories, Defeats, Temporary stat values & boolean to check if the character is fighting

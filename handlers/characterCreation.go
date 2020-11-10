@@ -54,7 +54,7 @@ func NewCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 			return
 		}
 
-		_, err = database.DB.Exec(`INSERT INTO characters(charName, player, weaponSkill, balisticSkill, strength, endurance, agility, willpower, fellowship, hitpoints) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+		_, err = database.DB.Exec(`INSERT INTO characters(charName, player, weaponSkill, balisticSkill, strength, endurance, agility, willpower, fellowship, hitpoints, isCharAlive) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'true')`,
 			m.Content, m.Author.ID, character.WeaponSkill, character.BalisticSkill, character.Strength, character.Endurance, character.Agility, character.Willpower, character.Fellowship, character.Hitpoints)
 
 		if err != nil {

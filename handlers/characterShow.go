@@ -32,7 +32,7 @@ func ShowCharacters(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		createdCharacter := game.PlayerChar{}
 
-		if err := charRows.Scan(&createdCharacter.Id, &createdCharacter.Name, &createdCharacter.Player, &createdCharacter.WeaponSkill, &createdCharacter.BalisticSkill, &createdCharacter.Strength, &createdCharacter.Endurance, &createdCharacter.Agility, &createdCharacter.Willpower, &createdCharacter.Fellowship, &createdCharacter.Hitpoints); err != nil {
+		if err := charRows.Scan(&createdCharacter.Id, &createdCharacter.Name, &createdCharacter.Player, &createdCharacter.WeaponSkill, &createdCharacter.BalisticSkill, &createdCharacter.Strength, &createdCharacter.Endurance, &createdCharacter.Agility, &createdCharacter.Willpower, &createdCharacter.Fellowship, &createdCharacter.Hitpoints, &createdCharacter.IsCharAlive); err != nil {
 
 			log.Fatal(err)
 
@@ -49,7 +49,8 @@ func ShowCharacters(s *discordgo.Session, m *discordgo.MessageCreate) {
 				"\n**Agility:** ", strconv.Itoa(createdCharacter.Agility),
 				"\n**Willpower:** ", strconv.Itoa(createdCharacter.Willpower),
 				"\n**Fellowship:** ", strconv.Itoa(createdCharacter.Fellowship),
-				"\n**Hitpoints:** ", strconv.Itoa(createdCharacter.Hitpoints)),
+				"\n**Hitpoints:** ", strconv.Itoa(createdCharacter.Hitpoints),
+				"\n**Still Alive:** ", createdCharacter.IsCharAlive),
 			Color: 0x0099ff,
 			Footer: &discordgo.MessageEmbedFooter{
 				Text: "Player: " + m.Author.ID,
