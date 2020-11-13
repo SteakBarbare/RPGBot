@@ -17,8 +17,6 @@ type error interface {
 func DuelController(s *discordgo.Session, channelID string, involvedPlayers []string) {
 
 	initialSetup := duelSetup(involvedPlayers[0], involvedPlayers[1])
-	fmt.Println("Challenger: ", initialSetup.Challengers[0])
-	fmt.Println("Challenged: ", initialSetup.Challengers[1])
 
 	var err error
 	s.ChannelMessageSend(channelID, "Rolling Initiative...")

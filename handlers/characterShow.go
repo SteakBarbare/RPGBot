@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/SteakBarbare/RPGBot/game"
+	"github.com/SteakBarbare/RPGBot/utils"
 
 	"github.com/SteakBarbare/RPGBot/database"
 	"github.com/bwmarrin/discordgo"
@@ -58,7 +59,7 @@ func ShowCharacters(s *discordgo.Session, m *discordgo.MessageCreate) {
 		})
 
 		if err != nil {
-			s.ChannelMessageSend(m.ChannelID, errorMessage("Bot error", "Error showing characters."))
+			s.ChannelMessageSend(m.ChannelID, utils.ErrorMessage("Bot error", "Error showing characters."))
 			return
 		}
 
