@@ -17,8 +17,8 @@ type error interface {
 func DuelController(s *discordgo.Session, channelID string, involvedPlayers []string) {
 
 	initialSetup := duelSetup(involvedPlayers[0], involvedPlayers[1])
-	fmt.Println("Challenger: ", initialSetup.Challenger)
-	fmt.Println("Challenged: ", initialSetup.Challenged)
+	fmt.Println("Challenger: ", initialSetup.Challengers[0])
+	fmt.Println("Challenged: ", initialSetup.Challengers[1])
 
 	var err error
 	s.ChannelMessageSend(channelID, "Rolling Initiative...")
@@ -32,11 +32,11 @@ func DuelController(s *discordgo.Session, channelID string, involvedPlayers []st
 
 // Load Duel Infos
 func duelSetup(challenger string, challenged string) *game.DuelBattle {
+	challengersArray := []string{challenger, challenged}
 	initialSetup := game.DuelBattle{
-		Challenger: challenger,
-		Challenged: challenged,
-		IsOver:     false,
-		Turn:       0,
+		Challengers: challengersArray,
+		IsOver:      false,
+		Turn:        0,
 	}
 
 	return &initialSetup
@@ -69,18 +69,18 @@ func rollInitiative(duelSetup *game.DuelBattle, s *discordgo.Session, channelID 
 
 	if challengerInitiative > challengedInitiative {
 		s.ChannelMessageSend(channelID, fmt.Sprintln(challengerChar.Name, " will play first"))
-		return duelSetup.Challenger, nil
+		return duelSetup.Challengers[0], nil
 	} else if challengedInitiative > challengerInitiative {
 		s.ChannelMessageSend(channelID, fmt.Sprintln(challengedChar.Name, " will play first"))
-		return duelSetup.Challenged, nil
+		return duelSetup.Challengers[1], nil
 	} else {
 		s.ChannelMessageSend(channelID, "Tie ! Choosing at random who will have the initiative...")
 		if rand.Intn(10) < 5 {
 			s.ChannelMessageSend(channelID, fmt.Sprintln(challengerChar.Name, " will play first"))
-			return duelSetup.Challenger, nil
+			return duelSetup.Challengers[0], nil
 		} else {
 			s.ChannelMessageSend(channelID, fmt.Sprintln(challengedChar.Name, " will play first"))
-			return duelSetup.Challenged, nil
+			return duelSetup.Challengers[1], nil
 		}
 	}
 }
