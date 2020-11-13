@@ -5,6 +5,7 @@ type DuelPreparation struct {
 	SelectingPlayer string
 	IsReady         int
 	IsOver          bool
+	Turn            int
 }
 
 type DuelPlayer struct {
@@ -13,4 +14,15 @@ type DuelPlayer struct {
 	Challenged     string
 	ChallengerChar string
 	ChallengedChar string
+}
+
+type DuelBattle struct {
+	Id             string
+	Challenger     string
+	Challenged     string
+	ChallengerChar string
+	ChallengedChar string
+	IsOver         bool
+	Turn           int
+	ActiveFighter  string
 }

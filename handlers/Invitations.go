@@ -119,7 +119,7 @@ func duelInvitationHandler(s *discordgo.Session, r *discordgo.MessageReactionAdd
 
 		duelPreparationId := 0
 
-		err = database.DB.QueryRow(`INSERT INTO duelPreparation (selectingPlayer, isReady, isOver) VALUES ($1, $2, 'false') RETURNING id`, opponents[1], 0).Scan(&duelPreparationId)
+		err = database.DB.QueryRow(`INSERT INTO duelPreparation (selectingPlayer, isReady, isOver, turn) VALUES ($1, $2, 'false', 0) RETURNING id`, opponents[1], 0).Scan(&duelPreparationId)
 		if err != nil {
 			fmt.Println(err.Error())
 		}

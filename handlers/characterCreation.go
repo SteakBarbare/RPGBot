@@ -61,6 +61,13 @@ func NewCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 			panic(err)
 		}
 
+		_, err = database.DB.Exec(`INSERT INTO battleChars(charName, player, weaponSkill, balisticSkill, strength, endurance, agility, willpower, fellowship, hitpoints, isFighting, isDodging, isFleeing) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'false', 'false', 'false')`,
+			m.Content, m.Author.ID, character.WeaponSkill, character.BalisticSkill, character.Strength, character.Endurance, character.Agility, character.Willpower, character.Fellowship, character.Hitpoints)
+
+		if err != nil {
+			panic(err)
+		}
+
 	} else {
 		s.ChannelMessageSend(m.ChannelID, "Aborting character creation")
 	}

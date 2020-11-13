@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS battleChars(
     willpower INT NOT NULL,
     fellowship INT NOT NULL,
     hitpoints INT NOT NULL,
+    isFighting BOOLEAN,
     isDodging BOOLEAN,
     isFleeing BOOLEAN
 );
@@ -33,7 +34,8 @@ CREATE TABLE IF NOT EXISTS duelPreparation (
     id SERIAL,
 	selectingPlayer    VARCHAR(255) NOT NULL,
     isReady         INT NOT NULL,
-    isOver          BOOLEAN NOT NULL
+    isOver          BOOLEAN NOT NULL,
+    turn            Int
 );
 
 CREATE TABLE IF NOT EXISTS duelPlayers(
