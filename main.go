@@ -3,64 +3,43 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"os/signal"
-	"syscall"
+	"time"
 
 	"github.com/SteakBarbare/RPGBot/database"
-	"github.com/SteakBarbare/RPGBot/handlers"
-	"github.com/bwmarrin/discordgo"
-	"github.com/caarlos0/env/v6"
-	"github.com/joho/godotenv"
+	"github.com/caarlos0/env"
+	"github.com/gin-gonic/gin"
+	cors "github.com/itsjamie/gin-cors"
+	"github.com/jasongauvin/DB_GAUVIN_P01/router"
 )
 
 func main() {
 
-	var token string
-
-	// Loading env file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	token = os.Getenv("TOKEN")
-
-	cfg := database.Config{}
-	if err := env.Parse(&cfg); err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(cfg)
-
-	database.Connect(cfg)
-	database.MakeMigrations()
-
-	// Create a new Discord session using the provided bot token.
-
-	dg, err := discordgo.New(`Bot ` + token)
-	if err != nil {
-		fmt.Println("error creating Discord session,", err)
-		return
-	}
-
-	// Register the messageCreate func as a callback for MessageCreate events.
-	dg.AddHandler(handlers.MessageCreate)
-	dg.AddHandler(handlers.ReactionsHandler)
-
-	// Open a websocket connection to Discord and begin listening.
-	err = dg.Open()
-	if err != nil {
-		fmt.Println("error opening connection,", err)
-		return
-	}
-
-	// Wait here until CTRL-C or other term signal is received.
-	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
-	sc := make(chan os.Signal, 1)
-	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
-	<-sc
-
-	// Cleanly close down the Discord session.
-	dg.Close()
+		time.Sleep(5 * time.Second)
+		
+		cfg := database.Config{}
+		if err := env.Parse(&cfg); err != nil {
+			log.Fatal(err)
+		}
+	
+		fmt.Println(cfg)
+	
+		database.Connect(cfg)
+		database.MakeMigrations()
+	
+		r := gin.Default()
+	
+		r.Use(cors.Middleware(cors.Config{
+			Origins:         "*",
+			Methods:         "GET, PUT, POST, DELETE",
+			RequestHeaders:  "Origin, Authorization, Content-Type",
+			ExposedHeaders:  "Authorization",
+			MaxAge:          50 * time.Second,
+			Credentials:     true,
+			ValidateHeaders: false,
+		}))
+	
+		router.InitRouter(r)
+	
+		log.Fatal(r.Run(":8080")) // listen and serve on 8080
 }
+

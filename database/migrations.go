@@ -9,7 +9,7 @@ import (
 
 // MakeMigrations executes the sql migration files
 func MakeMigrations() {
-	file, err := ioutil.ReadFile("sql/migrations.sql")
+	file, err := ioutil.ReadFile("../sql/migrations.sql")
 
 	if err != nil {
 		log.Error("Error while opening migrations file: ", err)

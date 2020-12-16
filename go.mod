@@ -1,12 +1,11 @@
-module github.com/SteakBarbare/RPGBot
+module "github.com/SteakBarbare/Partiel MT4"
 
 go 1.15
 
 require (
-	github.com/JackMaarek/spiderMail v0.0.0-20201014083944-773c297e1989
-	github.com/bwmarrin/discordgo v0.22.0
-	github.com/caarlos0/env/v6 v6.3.0
-	github.com/joho/godotenv v1.3.0
-	github.com/lib/pq v1.8.0
-	github.com/sirupsen/logrus v1.7.0
+	github.com/SteakBarbare/RPGBot v0.0.0-20201012102309-7a61ab142e36
+	github.com/caarlos0/env v3.5.0+incompatible
+	github.com/gin-gonic/gin v1.6.3
+	github.com/itsjamie/gin-cors v0.0.0-20160420130702-97b4a9da7933
+	github.com/jasongauvin/DB_GAUVIN_P01 v0.0.0-20201014125834-f2477cc543d5
 )
