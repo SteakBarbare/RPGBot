@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/SteakBarbare/RPGBot/database"
 	"github.com/SteakBarbare/RPGBot/game"
 	"github.com/SteakBarbare/RPGBot/utils"
 	"github.com/bwmarrin/discordgo"
@@ -26,6 +27,18 @@ func DuelController(s *discordgo.Session, channelID string, involvedPlayers []st
 		return
 	}
 
+	// Get duel Informations
+	currentDuel, err := utils.GetActiveDuel()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	_, err = database.DB.Exec(`UPDATE duelPreparation SET selectingPlayer=$1 WHERE id=$2;`, initialSetup.ActiveFighter, currentDuel.Id)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	FightOptionsInfo(s, channelID)
 }
 
 // Load Duel Infos
@@ -40,7 +53,7 @@ func duelSetup(challenger string, challenged string) *game.DuelBattle {
 	return &initialSetup
 }
 
-// Do an initiative test to determine which character will play first
+// Do an initiative test (based on character Agility) to determine which character will play first
 func rollInitiative(duelSetup *game.DuelBattle, s *discordgo.Session, channelID string) (string, error) {
 	currentDuel, err := utils.GetActiveDuel()
 	if err != nil {
@@ -62,8 +75,8 @@ func rollInitiative(duelSetup *game.DuelBattle, s *discordgo.Session, channelID 
 
 	challengerInitiative := challengerChar.Agility + (rand.Intn(9) + 1)
 	challengedInitiative := challengedChar.Agility + (rand.Intn(9) + 1)
-	s.ChannelMessageSend(channelID, fmt.Sprintln(challengerChar.Name, " Rolled an ", challengerInitiative, " for it's initiative"))
-	s.ChannelMessageSend(channelID, fmt.Sprintln(challengedChar.Name, " Rolled an ", challengedInitiative, " for it's initiative"))
+	s.ChannelMessageSend(channelID, fmt.Sprintln(challengerChar.Name, " Rolled ", challengerInitiative, " for it's initiative"))
+	s.ChannelMessageSend(channelID, fmt.Sprintln(challengedChar.Name, " Rolled ", challengedInitiative, " for it's initiative"))
 
 	if challengerInitiative > challengedInitiative {
 		s.ChannelMessageSend(channelID, fmt.Sprintln(challengerChar.Name, " will play first"))

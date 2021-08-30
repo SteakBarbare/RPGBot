@@ -10,6 +10,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+// Main function, will run till either all characters are selected, an error has occured, or the selection is aborted
 func chooseCharacterBase(s *discordgo.Session, channelID string, involvedPlayers []string, lastPlayer int) {
 	if lastPlayer == 0 {
 		s.ChannelMessageSend(channelID, "Choose a character")

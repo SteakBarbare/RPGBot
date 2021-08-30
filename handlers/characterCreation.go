@@ -9,8 +9,15 @@ import (
 	"github.com/SteakBarbare/RPGBot/database"
 	"github.com/SteakBarbare/RPGBot/game"
 	"github.com/SteakBarbare/RPGBot/utils"
+	"github.com/SteakBarbare/RPGBot/connector"
 	"github.com/bwmarrin/discordgo"
 )
+
+type NewCharacterCommand struct {
+	Connector connector.DiscordInterface
+	Session		*discordgo.Session
+	Message   *discordgo.MessageCreate
+}
 
 func NewCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.ID == s.State.User.ID {
@@ -33,6 +40,7 @@ func NewCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		character := statsGeneration(m.Content, m.Author.ID)
 
+		// Show the new character stats & name
 		_, err := s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 			Title: fmt.Sprintln("This is your character, **", m.Content, "** !\n Here are it's starting stats:"),
 			Description: fmt.Sprintln(
@@ -74,6 +82,7 @@ func NewCharacter(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 }
 
+// Generate the different stats (random)
 func statsGeneration(givenName string, author string) *game.PlayerChar {
 	character := game.PlayerChar{
 		Name:          givenName,

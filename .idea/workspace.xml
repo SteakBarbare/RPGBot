@@ -20,10 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e48023e9-7086-4365-b960-f70384f7b3c7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/characters.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/characters.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/Invitations.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/Invitations.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/characterShow.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/characterShow.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/duels/duelController.go" beforeDir="false" afterPath="$PROJECT_DIR$/duels/duelController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/duels/fightActions.go" beforeDir="false" afterPath="$PROJECT_DIR$/duels/fightActions.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/duels/turnOptions.go" beforeDir="false" afterPath="$PROJECT_DIR$/duels/turnOptions.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/characterChoose.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/characterChoose.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/characterCreation.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/characterCreation.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +58,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../HETIC-MT-P2021/CQRSES_GROUP5" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -86,18 +88,5 @@
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="1326" y="624" width="583" height="403" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1602062641864">
-      <screen x="0" y="0" width="3840" height="2092" />
-    </state>
-    <state x="1326" y="624" width="583" height="403" key="#com.intellij.fileTypes.FileTypeChooser/0.0.3840.2092@0.0.3840.2092" timestamp="1602062641864" />
-    <state x="663" y="322" width="583" height="410" key="#com.intellij.fileTypes.FileTypeChooser/0.29.1920.983@0.29.1920.983" timestamp="1601906572515" />
-    <state x="1476" y="507" width="424" height="491" key="FileChooserDialogImpl" timestamp="1601979253452">
-      <screen x="0" y="0" width="3840" height="2092" />
-    </state>
-    <state x="738" y="267" width="424" height="520" key="FileChooserDialogImpl/0.29.1920.983@0.29.1920.983" timestamp="1601904166463" />
-    <state x="1476" y="507" width="424" height="491" key="FileChooserDialogImpl/3840.571.1920.1080/0.0.3840.2092@0.0.3840.2092" timestamp="1601979253452" />
-    <state x="5316" y="523" key="FileChooserDialogImpl/7680.767.1920.1080/3840.0.3840.2160/0.0.3840.2092@3840.0.3840.2160" timestamp="1601630705595" />
   </component>
 </project>
